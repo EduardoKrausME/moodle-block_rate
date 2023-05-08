@@ -23,6 +23,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die;
+
 require_once($CFG->dirroot . '/blocks/rate_course/backup/moodle2/restore_rate_course_stepslib.php');
 
 class restore_rate_course_block_task extends restore_block_task {
@@ -42,11 +44,11 @@ class restore_rate_course_block_task extends restore_block_task {
         return array(); // No special handling of configdata.
     }
 
-    static public function define_decode_contents() {
+    public static function define_decode_contents() {
         return array();
     }
 
-    static public function define_decode_rules() {
+    public static function define_decode_rules() {
         return array();
     }
 }

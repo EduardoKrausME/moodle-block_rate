@@ -21,21 +21,20 @@
  * @subpackage rate_course
  * @copyright  2009 Jenny Gray
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * Code was Rewritten for Moodle 2.X By Atar + Plus LTD for Comverse LTD.
- * @copyright &copy; 2011 Comverse LTD.
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  */
+
+defined('MOODLE_INTERNAL') || die();
 
 /* List of handlers. */
 
+$handlers = array(
 
-/*
- * Course deleted.
-*/
-$observers = array(
-    array(
-        'eventname' => '\core\event\course_deleted',
-        'callback'  => '\block_rate_course\observer::course_delete'
+    /*
+     * Course deleted.
+    */
+    'course_deleted' => array(
+        'handlerfile' => '/blocks/rate_course/lib.php', // Where to call.
+        'handlerfunction' => 'course_delete', // What to call.
+        'schedule' => 'instant'
     )
 );

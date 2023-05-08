@@ -21,21 +21,21 @@
  * @subpackage rate_course
  * @copyright  2009 Jenny Gray
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * Code was Rewritten for Moodle 2.X By Atar + Plus LTD for Comverse LTD.
- * @copyright &copy; 2011 Comverse LTD.
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  */
 
 /**
  * Called by event handling on course deletion to tidy up database
+ *
  * @param $eventdata object event information including course id
+ *
  * @return SQL set or false on fail
+ * @throws dml_exception
  */
+
 function course_delete($eventdata) {
     global $DB;
     $res = $DB->delete_records('block_rate_course',
-            array('course'=>$eventdata->id));
+        array('course' => $eventdata->id));
     if ($res === false) {
         return $res;
     }

@@ -15,37 +15,29 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Rate course block backup
  *
- * @package    blocks
- * @subpackage rate_course
- * @copyright  2012 Open University
+ * @package    block_rate_course
+ * @copyright  2019 Pierre Duverneix - Fondation UNIT
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once($CFG->dirroot . '/blocks/rate_course/backup/moodle2/backup_rate_course_stepslib.php');
-
-class backup_rate_course_block_task extends backup_block_task {
-
-    protected function define_my_settings() {
-    }
-
-    protected function define_my_steps() {
-        $this->add_step(new backup_rate_course_block_structure_step('rate_course_structure',
-            'rate_course.xml'));
-    }
-
-    public function get_fileareas() {
-        return array();
-    }
-
-    public function get_configdata_encoded_attributes() {
-        return array();
-    }
-
-    public static function encode_content_links($content) {
-        return $content; // No special encoding of links.
-    }
-}
+$functions = array(
+    'block_rate_course_set_rating' => array(
+        'classname' => 'block_rate_course_external',
+        'methodname' => 'set_rating',
+        'description' => 'Set the user rating',
+        'type' => 'write',
+        'ajax' => true,
+        'capabilities' => 'block/rate_course:rate'
+    ),
+    'block_rate_course_set_favorite' => array(
+        'classname' => 'block_rate_course_external',
+        'methodname' => 'set_rating',
+        'description' => 'Set the user rating',
+        'type' => 'write',
+        'ajax' => true,
+        'capabilities' => 'block/rate_course:rate'
+    )
+);

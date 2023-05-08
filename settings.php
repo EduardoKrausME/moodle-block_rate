@@ -20,13 +20,23 @@
  * @subpackage rate_course
  * @copyright  2009 Jenny Gray
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * Code was Rewritten for Moodle 2.X By Atar + Plus LTD for Comverse LTD.
- * @copyright &copy; 2011 Comverse LTD.
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  */
 
-$settings->add(new admin_setting_configtext('block_rate_course_quest',
-get_string('survey', 'block_rate_course'),
-get_string('survey_help', 'block_rate_course'),
-''));
+defined('MOODLE_INTERNAL') || die;
+
+require_once($CFG->dirroot . '/blocks/rate_course/lib.php');
+
+if ($ADMIN->fulltree) {
+
+    $setting = new admin_setting_configtext('block_rate_course/customtitle',
+        get_string('customtitle', 'block_rate_course'),
+        null, '', PARAM_TEXT
+    );
+    $settings->add($setting);
+
+    $setting = new admin_setting_configtextarea('block_rate_course/description',
+        get_string('description', 'core'),
+        null, '', PARAM_TEXT
+    );
+    $settings->add($setting);
+}

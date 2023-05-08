@@ -21,14 +21,14 @@
  * @subpackage rate_course
  * @copyright  2009 Jenny Gray
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * Code was Rewritten for Moodle 2.X By Atar + Plus LTD for Comverse LTD.
- * @copyright &copy; 2011 Comverse LTD.
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  */
 
-$plugin->version = 2014101600;
 
-$plugin->requires     = 2010112400; // YYYYMMDDHH (This is the release version for Moodle 2.0).
-$plugin->maturity     = MATURITY_BETA;
-$plugin->release      = '1.0';
+defined('MOODLE_INTERNAL') || die();
+
+$plugin->version = 2019070504;
+$plugin->requires = 2010112400;
+$plugin->component = 'block_rate_course';
+$plugin->cron = 0;
+$plugin->release = '2.0';
+$plugin->maturity = MATURITY_STABLE;
