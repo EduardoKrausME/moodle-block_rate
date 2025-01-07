@@ -15,14 +15,19 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template block_rate_course/rating
+    @template block_rate/rating
+
+    Example context (json):
+    {
+        "rating": 5
+    }
 }}
-<div id="block_rate_course-rating" class="col-12 mt-4">
+<div id="block_rate-rating" class="col-12 mt-4">
     {{#stars}}
-        {{#pix}} star, block_rate_course {{/pix}}
+        {{#pix}} star, block_rate {{/pix}}
     {{/stars}}
     {{#half}}
-        {{#pix}} star-half, block_rate_course {{/pix}}
+        {{#pix}} star-half, block_rate {{/pix}}
     {{/half}}
 </div>
-<div>{{#str}} rating_altnum, block_rate_course, {{{rating}}} {{/str}}</div>
+<div>{{#str}} rating_altnum, block_rate, {{{rating}}} {{/str}}</div>
