@@ -23,8 +23,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Rating';
-$string['courserating'] = 'Ratings';
+$string['pluginname'] = 'Star Rating';
 $string['rate:addinstance'] = 'Add a new block for course and activity ratings';
 $string['rate:myaddinstance'] = 'Manage my ratings';
 $string['rate:rate'] = 'Can rate';

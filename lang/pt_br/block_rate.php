@@ -23,8 +23,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Avaliação';
-$string['courserating'] = 'Avaliações';
+$string['pluginname'] = 'Avaliação por Estrelas';
 $string['rate:addinstance'] = 'Adicionar um novo bloco de avaliação de cursos e atividades';
 $string['rate:myaddinstance'] = 'Gerenciar minhas avaliações';
 $string['rate:rate'] = 'Pode avaliar';
