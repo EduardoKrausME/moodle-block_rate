@@ -24,25 +24,5 @@
  */
 
 function xmldb_block_rate_upgrade($oldversion = 0) {
-    global $DB;
-
-    $dbman = $DB->get_manager();
-
-    if ($oldversion < 2025010600) {
-        $table = new xmldb_table("block_rate");
-
-        $field1 = new xmldb_field("cmid", XMLDB_TYPE_INTEGER, "10", null, null, null, null, "course");
-        if (!$dbman->field_exists($table, $field1)) {
-            $dbman->add_field($table, $field1);
-        }
-
-        $field2 = new xmldb_field("created", XMLDB_TYPE_INTEGER, "20", null, null, null, 1, "rating");
-        if (!$dbman->field_exists($table, $field2)) {
-            $dbman->add_field($table, $field2);
-        }
-
-        upgrade_plugin_savepoint(true, 2025010600, "block", "rate");
-    }
-
     return true;
 }
