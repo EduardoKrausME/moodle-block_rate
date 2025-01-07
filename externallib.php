@@ -25,6 +25,9 @@ defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->libdir . "/externallib.php");
 
+/**
+ * Class block_rate_course_external
+ */
 class block_rate_course_external extends external_api {
     /**
      * Describes the parameters for set_status.
@@ -34,50 +37,58 @@ class block_rate_course_external extends external_api {
      */
     public static function set_rating_parameters() {
         return new external_function_parameters(
-            array(
-                'courseid' => new external_value(PARAM_INT, 'The course ID'),
-                'rating' => new external_value(PARAM_INT, 'The rating value')
-            )
+            [
+                "courseid" => new external_value(PARAM_INT, "The course ID"),
+                "cmid" => new external_value(PARAM_INT, "The course module ID"),
+                "rating" => new external_value(PARAM_INT, "The rating value"),
+            ]
         );
     }
 
-    public static function set_rating($courseid, $rating) {
+    /**
+     * Function set_rating
+     *
+     * @param $courseid
+     * @param $cmid
+     * @param $rating
+     *
+     * @return bool
+     */
+    public static function set_rating($courseid, $cmid, $rating) {
         global $DB, $USER;
 
         // Parameters validation.
         $params = self::validate_parameters(self::set_rating_parameters(),
-            array('courseid' => $courseid, 'rating' => $rating));
+            ["courseid" => $courseid, "cmid" => $cmid, "rating" => $rating]);
 
-        $rating = $DB->get_record('block_rate_course', array('userid' => $USER->id, 'course' => $params['courseid']));
+        $rating = $DB->get_record("block_rate_course",
+            ["userid" => $USER->id, "cmid" => $params["cmid"], "course" => $params["courseid"]]);
 
         if ($rating) {
-            $data = new \stdClass();
-            $data->id = $rating->id;
-            $data->course = $params['courseid'];
-            $data->userid = $USER->id;
-            $data->rating = $params['rating'];
-            $DB->update_record('block_rate_course', $data);
+            $rating->rating = $params["rating"];
+            $DB->update_record("block_rate_course", $rating);
 
             return true;
         } else {
-            $data = $DB->insert_record('block_rate_course', array(
-                'course' => $params['courseid'],
-                'userid' => $USER->id,
-                'rating' => $params['rating']));
+            $data = (object)[
+                "course" => $params["courseid"],
+                "cmid" => $params["cmid"],
+                "userid" => $USER->id,
+                "rating" => $params["rating"],
+                "created" => time(),
+            ];
+            $DB->insert_record("block_rate_course", $data);
 
             return true;
         }
-
-        return false;
     }
 
     /**
-     * Returns description of method result value.
+     * Function set_rating_returns
      *
-     * @return external_description
-     * @since Moodle 3.4
+     * @return external_value
      */
     public static function set_rating_returns() {
-        return new external_value(PARAM_BOOL, 'The user rating status.');
+        return new external_value(PARAM_BOOL, "The user rating status . ");
     }
 }

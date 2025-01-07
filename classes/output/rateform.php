@@ -27,20 +27,46 @@ use renderer_base;
 use templatable;
 use stdClass;
 
+/**
+ * Class rateform
+ *
+ * @package block_rate_course\output
+ */
 class rateform implements renderable, templatable {
 
-    public function __construct($courseid) {
+    /** @var int */
+    public $courseid;
+    /** @var int */
+    public $cmid;
+
+    /**
+     * rateform constructor.
+     *
+     * @param $courseid
+     * @param $cmid
+     */
+    public function __construct($courseid, $cmid) {
         $this->courseid = $courseid;
+        $this->cmid = $cmid;
     }
 
-    private static function get_my_ratting($courseid) {
+    /**
+     * Function get_my_ratting
+     *
+     * @param $courseid
+     * @param $cmid
+     *
+     * @return string
+     */
+    private static function get_my_ratting($courseid, $cmid) {
         global $DB, $USER;
 
-        $myrating = $DB->get_record('block_rate_course', array('course' => $courseid, 'userid' => $USER->id));
+        $myrating = $DB->get_record("block_rate_course",
+            ["course" => $courseid, "cmid" => $cmid, "userid" => $USER->id]);
         if ($myrating) {
             return $myrating->rating;
         } else {
-            return '';
+            return "";
         }
     }
 
@@ -52,16 +78,12 @@ class rateform implements renderable, templatable {
      * @return stdClass
      */
     public function export_for_template(renderer_base $output) {
-        $myrating = self::get_my_ratting($this->courseid);
-        $israted = false;
-        if ($myrating) {
-            $israted = true;
-        }
+        $myrating = self::get_my_ratting($this->courseid, $this->cmid);
 
-        return [
-            'israted' => $israted,
-            'myrating' => $myrating,
-            'courseid' => $this->courseid
+        return (object)[
+            "cmid" => $this->cmid,
+            "myrating" => $myrating,
+            "courseid" => $this->courseid,
         ];
     }
 }

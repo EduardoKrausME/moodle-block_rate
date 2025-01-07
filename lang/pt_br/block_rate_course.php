@@ -23,27 +23,16 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Avaliações do curso';
-$string['courserating'] = 'Avaliações do curso';
-$string['rate_course:addinstance'] = 'Adicionar um novo bloco de avaliação do curso';
-$string['rate_course:myaddinstance'] = 'avaliar Curso Minha capacidade de tela';
+$string['pluginname'] = 'Avaliação';
+$string['courserating'] = 'Avaliações';
+$string['rate_course:addinstance'] = 'Adicionar um novo bloco de avaliação de cursos e atividades';
+$string['rate_course:myaddinstance'] = 'Gerenciar minhas avaliações';
+$string['rate_course:rate'] = 'Pode avaliar';
 
-$string['completed'] = 'Obrigado. Você já atribuiu uma classificação a este curso.';
-$string['giverating'] = 'Dê uma nota';
-$string['intro'] = 'Por favor, indique o quanto você avalia este curso.';
-$string['submit'] = 'Enviar minha avaliação';
-$string['noguestuseage'] = 'Para avaliar este curso você precisa fazer login.';
-$string['rate_course:rate'] = 'Atribuir uma nota a um curso';
-$string['rating_alt0'] = 'Avaliação do curso: Nenhuma avaliação dada.';
-$string['rating_altnum'] = 'Avaliação do curso: {$a} estrelas.';
-$string['rating_users'] = 'Avaliado por {$a} usuário(s)';
-$string['editingsitehome'] = 'Este bloco exibirá avaliações apenas nas páginas do curso e está oculto em outro lugar.';
+$string['rating_altnum'] = 'Avaliação: {$a} estrelas.';
 
-// Integração do questionário.
-$string['survey'] = 'Qual é o nome do questionário?';
-$string['survey_help'] = 'Este é o módulo do questionário ao qual será vinculado (deixe em branco para interromper o link para o questionário)';
-$string['viewreview'] = 'Ver as respostas do questionário';
-
+$string['defaulttitle_course'] = 'Avaliar o curso';
+$string['defaulttitle_module'] = 'Avaliar a atividade';
 $string['customtitle'] = 'Título personalizado';
-$string['myrating'] = 'Minha classificação';
-$string['rerate'] = 'Avaliar novamente';
+$string['myrating'] = 'Minha avaliação';
+$string['rerate'] = 'Reavaliar';

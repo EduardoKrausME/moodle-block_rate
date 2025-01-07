@@ -32,22 +32,22 @@ class backup_rate_course_block_structure_step extends backup_block_structure_ste
         global $DB;
 
         // Define each element separated.
-        $ratecourse = new backup_nested_element('rate_course');
-        $items = new backup_nested_element('items');
+        $ratecourse = new backup_nested_element("rate_course");
+        $items = new backup_nested_element("items");
         $ratecourse->add_child($items);
 
         // Build the tree.
-        $item = new backup_nested_element('item', array('id'), array(
-            'course',
-            'userid',
-            'rating',
-        ));
+        $item = new backup_nested_element("item", ["id"], [
+            "course",
+            "userid",
+            "rating",
+        ]);
         $items->add_child($item);
 
-        $item->set_source_table('block_rate_course',
-            array('course' => backup::VAR_COURSEID));
+        $item->set_source_table("block_rate_course",
+            ["course" => backup::VAR_COURSEID]);
 
-        $item->annotate_ids('user', 'userid');
+        $item->annotate_ids("user", "userid");
 
         return $this->prepare_block_structure($ratecourse);
     }

@@ -25,30 +25,30 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once($CFG->dirroot . '/blocks/rate_course/backup/moodle2/restore_rate_course_stepslib.php');
+require_once($CFG->dirroot . "/blocks/rate_course/backup/moodle2/restore_rate_course_stepslib.php");
 
 class restore_rate_course_block_task extends restore_block_task {
     protected function define_my_settings() {
     }
 
     protected function define_my_steps() {
-        $this->add_step(new restore_rate_course_block_structure_step('rate_course_structure',
-            'rate_course.xml'));
+        $this->add_step(new restore_rate_course_block_structure_step("rate_course_structure",
+            "rate_course.xml"));
     }
 
     public function get_fileareas() {
-        return array();
+        return [];
     }
 
     public function get_configdata_encoded_attributes() {
-        return array(); // No special handling of configdata.
+        return []; // No special handling of configdata.
     }
 
     public static function define_decode_contents() {
-        return array();
+        return [];
     }
 
     public static function define_decode_rules() {
-        return array();
+        return [];
     }
 }

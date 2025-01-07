@@ -24,19 +24,19 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once($CFG->dirroot . '/blocks/rate_course/lib.php');
+require_once($CFG->dirroot . "/blocks/rate_course/lib.php");
 
 if ($ADMIN->fulltree) {
 
-    $setting = new admin_setting_configtext('block_rate_course/customtitle',
-        get_string('customtitle', 'block_rate_course'),
-        null, '', PARAM_TEXT
+    $setting = new admin_setting_configtext("block_rate_course/customtitle",
+        get_string("customtitle", "block_rate_course"),
+        null, "", PARAM_TEXT
     );
     $settings->add($setting);
 
-    $setting = new admin_setting_configtextarea('block_rate_course/description',
-        get_string('description', 'core'),
-        null, '', PARAM_TEXT
+    $setting = new admin_setting_configtextarea("block_rate_course/description",
+        get_string("description", "core"),
+        null, "", PARAM_TEXT
     );
     $settings->add($setting);
 }

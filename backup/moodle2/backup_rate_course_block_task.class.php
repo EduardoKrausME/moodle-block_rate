@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once($CFG->dirroot . '/blocks/rate_course/backup/moodle2/backup_rate_course_stepslib.php');
+require_once($CFG->dirroot . "/blocks/rate_course/backup/moodle2/backup_rate_course_stepslib.php");
 
 class backup_rate_course_block_task extends backup_block_task {
 
@@ -33,16 +33,16 @@ class backup_rate_course_block_task extends backup_block_task {
     }
 
     protected function define_my_steps() {
-        $this->add_step(new backup_rate_course_block_structure_step('rate_course_structure',
-            'rate_course.xml'));
+        $this->add_step(new backup_rate_course_block_structure_step("rate_course_structure",
+            "rate_course.xml"));
     }
 
     public function get_fileareas() {
-        return array();
+        return [];
     }
 
     public function get_configdata_encoded_attributes() {
-        return array();
+        return [];
     }
 
     public static function encode_content_links($content) {

@@ -27,14 +27,14 @@ defined('MOODLE_INTERNAL') || die();
 
 /* List of handlers. */
 
-$handlers = array(
+$handlers = [
 
     /*
      * Course deleted.
     */
-    'course_deleted' => array(
-        'handlerfile' => '/blocks/rate_course/lib.php', // Where to call.
-        'handlerfunction' => 'course_delete', // What to call.
-        'schedule' => 'instant'
-    )
-);
+    "course_deleted" => [
+        "handlerfile" => "/blocks/rate_course/lib.php", // Where to call.
+        "handlerfunction" => "course_delete", // What to call.
+        "schedule" => "instant",
+    ],
+];

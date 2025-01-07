@@ -36,7 +36,7 @@ class renderer extends plugin_renderer_base {
      */
     public function render_rating(\templatable $output) {
         $data = $output->export_for_template($this);
-        return $this->render_from_template('block_rate_course/rating', $data);
+        return $this->render_from_template("block_rate_course/rating", $data);
     }
 
     /**
@@ -48,7 +48,7 @@ class renderer extends plugin_renderer_base {
      */
     public function render_rateform(\templatable $output) {
         $data = $output->export_for_template($this);
-        return $this->render_from_template('block_rate_course/rate-form', $data);
+        return $this->render_from_template("block_rate_course/rate-form", $data);
     }
 
 }

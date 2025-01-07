@@ -23,27 +23,18 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['rate_course:addinstance'] = 'Add a new course ratings block';
-$string['rate_course:myaddinstance'] = 'rate Course My screen capability';
-$string['pluginname'] = 'Course ratings';
-$string['courserating'] = 'Course ratings';
+$string['pluginname'] = 'Rating';
+$string['courserating'] = 'Ratings';
+$string['rate_course:addinstance'] = 'Add a new block for course and activity ratings';
+$string['rate_course:myaddinstance'] = 'Manage my ratings';
+$string['rate_course:rate'] = 'Can rate';
 
-$string['completed'] = 'Thank you. You have already given this course a rating.';
-$string['giverating'] = 'Give a rating';
-$string['intro'] = 'Please indicate how highly you rate this course.';
-$string['submit'] = 'Submit my rating';
-$string['noguestuseage'] = 'To rate this course you will need to log in.';
-$string['rate_course:rate'] = 'Give a rating to a course';
-$string['rating_alt0'] = 'Course rating: No ratings given.';
-$string['rating_altnum'] = 'Course rating: {$a} stars.';
-$string['rating_users'] = 'Rated by {$a} user(s)';
-$string['editingsitehome'] = 'This block will display ratings on course pages only, and is hidden elsewhere.';
+$string['rating_altnum'] = 'Rating: {$a} stars.';
 
-// Questionnaire integration.
-$string['survey'] = 'What is the questionnaire name?';
-$string['survey_help'] = 'This is the questionnaire module which will be linked to (leave blank to stop link to questionnaire)';
-$string['viewreview'] = 'View questionnaire responses';
-
+$string['defaulttitle_course'] = 'Rate the course';
+$string['defaulttitle_module'] = 'Rate the activity';
 $string['customtitle'] = 'Custom title';
 $string['myrating'] = 'My rating';
-$string['rerate'] = 'Rate again';
+$string['rerate'] = 'Re-rate';
+
+

@@ -21,23 +21,15 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
+defined("MOODLE_INTERNAL") || die;
 
-$functions = array(
-    'block_rate_course_set_rating' => array(
-        'classname' => 'block_rate_course_external',
-        'methodname' => 'set_rating',
-        'description' => 'Set the user rating',
-        'type' => 'write',
-        'ajax' => true,
-        'capabilities' => 'block/rate_course:rate'
-    ),
-    'block_rate_course_set_favorite' => array(
-        'classname' => 'block_rate_course_external',
-        'methodname' => 'set_rating',
-        'description' => 'Set the user rating',
-        'type' => 'write',
-        'ajax' => true,
-        'capabilities' => 'block/rate_course:rate'
-    )
-);
+$functions = [
+    "block_rate_course_set_rating" => [
+        "classname" => "block_rate_course_external",
+        "methodname" => "set_rating",
+        "description" => "Set the user rating",
+        "type" => "write",
+        "ajax" => true,
+        "capabilities" => "block/rate_course:rate",
+    ],
+];

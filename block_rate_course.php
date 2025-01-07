@@ -24,34 +24,69 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_rate_course extends block_list {
+    /**
+     * Function init
+     */
     public function init() {
-        $this->title = get_string('courserating', 'block_rate_course');
-        $config = get_config('block_rate_course');
+        $this->title = get_string("defaulttitle_course", "block_rate_course");
+        $config = get_config("block_rate_course");
         if ($config && $config->customtitle) {
             $this->title = $config->customtitle;
         }
     }
 
+    /**
+     * Function applicable_formats
+     *
+     * @return array
+     */
     public function applicable_formats() {
-        return array('all' => true, 'mod' => false, 'tag' => false, 'my' => false);
+        return ["all" => true, "mod" => true, "tag" => false, "my" => false];
     }
 
+    /**
+     * Function has_config
+     *
+     * @return bool
+     */
     public function has_config() {
         return true;
     }
 
+    /**
+     * Function get_content
+     *
+     * @return stdClass
+     */
     public function get_content() {
-        global $COURSE;
+        global $COURSE, $OUTPUT;
 
         if ($this->content !== null) {
             return $this->content;
         }
 
-        $config = get_config('block_rate_course');
+        $config = get_config("block_rate_course");
 
         $this->content = new stdClass;
-        $this->content->items = array();
-        $this->content->icons = array();
+        $this->content->items = [];
+        $this->content->icons = [];
+
+        // Usando expressão regular para buscar o valor do cmid.
+        preg_match('/cmid-(\d+)/', $OUTPUT->body_attributes(), $matches);
+
+        // Verificando se o valor foi encontrado e exibindo.
+        $cmid = 0;
+        if (isset($matches[1])) {
+            $cmid = $matches[1];
+        }
+
+        if($cmid) {
+            $this->title = get_string("defaulttitle_module", "block_rate_course");
+            $config = get_config("block_rate_course");
+            if ($config && $config->customtitle) {
+                $this->title = $config->customtitle;
+            }
+        }
 
         if ($config && $config->description) {
             $description = '<div class="alert alert-info alert-dismissible fade show" role="alert">';
@@ -62,15 +97,15 @@ class block_rate_course extends block_list {
             $this->content->items[] = $description;
         }
 
-        $form = new \block_rate_course\output\rateform($COURSE->id);
-        $renderer = $this->page->get_renderer('block_rate_course');
+        $form = new \block_rate_course\output\rateform($COURSE->id, $cmid);
+        $renderer = $this->page->get_renderer("block_rate_course");
         $this->content->items[] = $renderer->render($form);
 
-        $rating = new \block_rate_course\output\rating($COURSE->id);
-        $renderer = $this->page->get_renderer('block_rate_course');
+        $rating = new \block_rate_course\output\rating($COURSE->id, $cmid);
+        $renderer = $this->page->get_renderer("block_rate_course");
 
         // Output current rating.
-        $this->content->footer = '<div class="text-center">' . $renderer->render($rating) . '</div>';
+        $this->content->footer = '<div class="text-center">' . $renderer->render($rating) . "</div>";
 
         return $this->content;
     }

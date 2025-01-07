@@ -29,10 +29,10 @@
 class restore_rate_course_block_structure_step extends restore_structure_step {
 
     protected function define_structure() {
-        $paths = array();
+        $paths = [];
 
-        $paths[] = new restore_path_element('block', '/block/rate_course/items');
-        $paths[] = new restore_path_element('item', '/block/rate_course/items/item');
+        $paths[] = new restore_path_element("block", "/block/rate_course/items");
+        $paths[] = new restore_path_element("item", "/block/rate_course/items/item");
 
         return $paths;
     }
@@ -43,23 +43,21 @@ class restore_rate_course_block_structure_step extends restore_structure_step {
     public function process_item($item) {
         global $DB;
 
-        $item['course'] = $this->task->get_courseid();
-        $item['userid'] = $this->task->get_userid();
+        $item["course"] = $this->task->get_courseid();
+        $item["userid"] = $this->task->get_userid();
 
-        $params = $item;
-        unset($params['id']);
+        unset($item["id"]);
 
-        $sql = 'SELECT id FROM {block_rate_course}
-                WHERE course = :course
-                AND userid  = :userid
-        ';
+        $sql = 'SELECT id 
+                  FROM {block_rate_course}
+                 WHERE course = :course
+                   AND userid = :userid';
 
-        if ($existing = $DB->get_record_sql($sql, $params)) {
-            $params['id'] = $existing->id;
-            $DB->update_record('block_rate_course', $params);
+        if ($existing = $DB->get_record_sql($sql, $item)) {
+            $item["id"] = $existing->id;
+            $DB->update_record("block_rate_course", $item);
         } else {
-            $DB->insert_record('block_rate_course', $params);
+            $DB->insert_record("block_rate_course", $item);
         }
     }
-
 }

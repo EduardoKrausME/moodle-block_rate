@@ -28,14 +28,13 @@
  *
  * @param $eventdata object event information including course id
  *
- * @return SQL set or false on fail
+ * @return bool SQL set or false on fail
  * @throws dml_exception
  */
 
 function course_delete($eventdata) {
     global $DB;
-    $res = $DB->delete_records('block_rate_course',
-        array('course' => $eventdata->id));
+    $res = $DB->delete_records("block_rate_course", ["course" => $eventdata->id]);
     if ($res === false) {
         return $res;
     }

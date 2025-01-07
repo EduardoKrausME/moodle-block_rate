@@ -27,28 +27,48 @@ use renderer_base;
 use templatable;
 use stdClass;
 
+/**
+ * Class rating
+ *
+ * @package block_rate_course\output
+ */
 class rating implements renderable, templatable {
 
-    public function __construct($courseid) {
+    /** @var int */
+    public $courseid;
+    /** @var int */
+    public $cmid;
+
+    /**
+     * rating constructor.
+     *
+     * @param $courseid
+     * @param $cmid
+     */
+    public function __construct($courseid, $cmid) {
         $this->courseid = $courseid;
+        $this->cmid = $cmid;
     }
 
     /**
      * Checks whether any version of the course already exists.
      *
      * @param int $courseid The ID of the course.
+     * @param int $cmid The ID of the course module.
      *
      * @return int  rating.
      * @throws \dml_exception
      */
-    protected static function get_rating($courseid) {
-        global $CFG, $DB;
+    protected static function get_rating($courseid, $cmid) {
+        global $DB;
+
         $sql = "SELECT AVG(rating) AS avg
-        FROM {block_rate_course}
-        WHERE course = $courseid";
+                  FROM {block_rate_course}
+                 WHERE course = :course
+                   AND cmid   = :cmid";
 
         $avg = -1;
-        if ($avgrec = $DB->get_record_sql($sql)) {
+        if ($avgrec = $DB->get_record_sql($sql, ["course" => $courseid, "cmid" => $cmid])) {
             $avg = $avgrec->avg * 2;  // Double it for half star scores.
             // Now round it up or down.
             $avg = round($avg);
@@ -65,20 +85,20 @@ class rating implements renderable, templatable {
      * @throws \dml_exception
      */
     public function export_for_template(renderer_base $output) {
-        $rating = self::get_rating($this->courseid);
+        $rating = self::get_rating($this->courseid, $this->cmid);
         $starscount = $rating / 2;
-        $parts = explode('.', (string)$starscount);
+        $parts = explode(".", (string)$starscount);
         $count = intval($parts[0]);
         $half = isset($parts[1]) ? true : false;
-        $stars = array();
+        $stars = [];
         for ($i = 0; $i < $count; $i++) {
             array_push($stars, $i);
         }
 
-        return [
-            'rating' => $starscount,
-            'stars' => $stars,
-            'half' => $half
+        return (object)[
+            "rating" => $starscount,
+            "stars" => $stars,
+            "half" => $half
         ];
     }
 }
