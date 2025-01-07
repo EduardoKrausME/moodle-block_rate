@@ -15,12 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Rating file
  *
+ * @package    block_rate
+ * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
  * @copyright  2019 Pierre Duverneix <pierre.duverneix@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace block_rate_course\output;
+namespace block_rate\output;
 
 use renderable;
 use renderer_base;
@@ -30,7 +33,7 @@ use stdClass;
 /**
  * Class rating
  *
- * @package block_rate_course\output
+ * @package block_rate\output
  */
 class rating implements renderable, templatable {
 
@@ -63,7 +66,7 @@ class rating implements renderable, templatable {
         global $DB;
 
         $sql = "SELECT AVG(rating) AS avg
-                  FROM {block_rate_course}
+                  FROM {block_rate}
                  WHERE course = :course
                    AND cmid   = :cmid";
 

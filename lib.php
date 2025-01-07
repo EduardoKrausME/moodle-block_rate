@@ -17,8 +17,8 @@
 /**
  * Library functions
  *
- * @package    block
- * @subpackage rate_course
+ * @package    block_rate
+ * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
  * @copyright  2009 Jenny Gray
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -31,10 +31,9 @@
  * @return bool SQL set or false on fail
  * @throws dml_exception
  */
-
 function course_delete($eventdata) {
     global $DB;
-    $res = $DB->delete_records("block_rate_course", ["course" => $eventdata->id]);
+    $res = $DB->delete_records("block_rate", ["course" => $eventdata->id]);
     if ($res === false) {
         return $res;
     }

@@ -17,8 +17,8 @@
 /**
  * Rate course block backup
  *
- * @package    blocks
- * @subpackage rate_course
+ * @package    block_rate
+ * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
  * @copyright  2012 Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,20 +26,35 @@
 /**
  * Define the complete structure for the backup, with file and id annotations
  */
-class restore_rate_course_block_structure_step extends restore_structure_step {
+class restore_rate_block_structure_step extends restore_structure_step {
 
+    /**
+     * Function define_structure
+     *
+     * @return array
+     */
     protected function define_structure() {
         $paths = [];
 
-        $paths[] = new restore_path_element("block", "/block/rate_course/items");
-        $paths[] = new restore_path_element("item", "/block/rate_course/items/item");
+        $paths[] = new restore_path_element("block", "/block/rate/items");
+        $paths[] = new restore_path_element("item", "/block/rate/items/item");
 
         return $paths;
     }
 
+    /**
+     * Function process_block
+     *
+     * @param $data
+     */
     public function process_block($data) {
     }
 
+    /**
+     * Function process_item
+     *
+     * @param $item
+     */
     public function process_item($item) {
         global $DB;
 
@@ -49,15 +64,15 @@ class restore_rate_course_block_structure_step extends restore_structure_step {
         unset($item["id"]);
 
         $sql = 'SELECT id 
-                  FROM {block_rate_course}
+                  FROM {block_rate}
                  WHERE course = :course
                    AND userid = :userid';
 
         if ($existing = $DB->get_record_sql($sql, $item)) {
             $item["id"] = $existing->id;
-            $DB->update_record("block_rate_course", $item);
+            $DB->update_record("block_rate", $item);
         } else {
-            $DB->insert_record("block_rate_course", $item);
+            $DB->insert_record("block_rate", $item);
         }
     }
 }

@@ -16,25 +16,24 @@
 
 /**
  *
- * @package    block
- * @subpackage rate_course
+ * @package    block_rate
+ * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
  * @copyright  2009 Jenny Gray
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once($CFG->dirroot . "/blocks/rate_course/lib.php");
+require_once($CFG->dirroot . "/blocks/rate/lib.php");
 
 if ($ADMIN->fulltree) {
-
-    $setting = new admin_setting_configtext("block_rate_course/customtitle",
-        get_string("customtitle", "block_rate_course"),
+    $setting = new admin_setting_configtext("block_rate/customtitle",
+        get_string("customtitle", "block_rate"),
         null, "", PARAM_TEXT
     );
     $settings->add($setting);
 
-    $setting = new admin_setting_configtextarea("block_rate_course/description",
+    $setting = new admin_setting_configtextarea("block_rate/description",
         get_string("description", "core"),
         null, "", PARAM_TEXT
     );

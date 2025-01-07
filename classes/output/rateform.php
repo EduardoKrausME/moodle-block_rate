@@ -15,12 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Rate Form file
  *
+ * @package    block_rate
+ * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
  * @copyright  2019 Pierre Duverneix <pierre.duverneix@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace block_rate_course\output;
+namespace block_rate\output;
 
 use renderable;
 use renderer_base;
@@ -30,7 +33,7 @@ use stdClass;
 /**
  * Class rateform
  *
- * @package block_rate_course\output
+ * @package block_rate\output
  */
 class rateform implements renderable, templatable {
 
@@ -61,7 +64,7 @@ class rateform implements renderable, templatable {
     private static function get_my_ratting($courseid, $cmid) {
         global $DB, $USER;
 
-        $myrating = $DB->get_record("block_rate_course",
+        $myrating = $DB->get_record("block_rate",
             ["course" => $courseid, "cmid" => $cmid, "userid" => $USER->id]);
         if ($myrating) {
             return $myrating->rating;

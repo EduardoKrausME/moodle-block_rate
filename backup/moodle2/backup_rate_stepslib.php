@@ -17,8 +17,8 @@
 /**
  * Rate course block backup
  *
- * @package    blocks
- * @subpackage rate_course
+ * @package    block_rate
+ * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
  * @copyright  2012 Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,13 +26,16 @@
 /**
  * Define the complete structure for the backup, with file and id annotations
  */
-class backup_rate_course_block_structure_step extends backup_block_structure_step {
+class backup_rate_block_structure_step extends backup_block_structure_step {
 
+    /**
+     * Function define_structure
+     *
+     * @return mixed
+     */
     protected function define_structure() {
-        global $DB;
-
         // Define each element separated.
-        $ratecourse = new backup_nested_element("rate_course");
+        $ratecourse = new backup_nested_element("rate");
         $items = new backup_nested_element("items");
         $ratecourse->add_child($items);
 
@@ -44,7 +47,7 @@ class backup_rate_course_block_structure_step extends backup_block_structure_ste
         ]);
         $items->add_child($item);
 
-        $item->set_source_table("block_rate_course",
+        $item->set_source_table("block_rate",
             ["course" => backup::VAR_COURSEID]);
 
         $item->annotate_ids("user", "userid");

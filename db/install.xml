@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="blocks/rate_course/db" VERSION="20080312" COMMENT="XMLDB file for Moodle course rating tables">
+<XMLDB PATH="blocks/rate/db" VERSION="20080312" COMMENT="XMLDB file for Moodle course rating tables">
     <TABLES>
-        <TABLE NAME="block_rate_course" COMMENT="To store ratings given to course">
+        <TABLE NAME="block_rate" COMMENT="To store ratings given to course">
             <FIELDS>
                 <FIELD NAME="id"      TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
                 <FIELD NAME="course"  TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
@@ -11,10 +11,10 @@
                 <FIELD NAME="created" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false" />
             </FIELDS>
             <KEYS>
-                <KEY NAME="rate_course_pk" TYPE="primary" FIELDS="id" COMMENT="Primary key for course ratings"/>
+                <KEY NAME="rate_pk" TYPE="primary" FIELDS="id" COMMENT="Primary key for course ratings"/>
             </KEYS>
             <INDEXES>
-                <INDEX NAME="rate_course_ix" UNIQUE="true" FIELDS="course,userid,cmid"/>
+                <INDEX NAME="rate_ix" UNIQUE="true" FIELDS="course,userid,cmid"/>
             </INDEXES>
         </TABLE>
     </TABLES>

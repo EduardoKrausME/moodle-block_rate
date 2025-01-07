@@ -15,8 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Service file
  *
- * @package    block_rate_course
+ * @package    block_rate
+ * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
  * @copyright  2019 Pierre Duverneix - Fondation UNIT
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -24,12 +26,12 @@
 defined("MOODLE_INTERNAL") || die;
 
 $functions = [
-    "block_rate_course_set_rating" => [
-        "classname" => "block_rate_course_external",
+    "block_rate_set_rating" => [
+        "classname" => "block_rate_external",
         "methodname" => "set_rating",
         "description" => "Set the user rating",
         "type" => "write",
         "ajax" => true,
-        "capabilities" => "block/rate_course:rate",
+        "capabilities" => "block/rate:rate",
     ],
 ];

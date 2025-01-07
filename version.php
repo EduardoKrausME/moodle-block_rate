@@ -17,12 +17,11 @@
 /**
  * Version details
  *
- * @package    block
- * @subpackage rate_course
+ * @package    block_rate
+ * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
  * @copyright  2009 Jenny Gray
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -30,4 +29,4 @@ $plugin->version = 2025010604;
 $plugin->requires = 2010112400;
 $plugin->release = "2.0.1";
 $plugin->maturity = MATURITY_STABLE;
-$plugin->component = "block_rate_course";
+$plugin->component = "block_rate";

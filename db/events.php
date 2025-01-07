@@ -17,8 +17,8 @@
 /**
  * Defines Workflow event handlers
  *
- * @package    block
- * @subpackage rate_course
+ * @package    block_rate
+ * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
  * @copyright  2009 Jenny Gray
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -28,12 +28,11 @@ defined('MOODLE_INTERNAL') || die();
 /* List of handlers. */
 
 $handlers = [
-
     /*
      * Course deleted.
     */
     "course_deleted" => [
-        "handlerfile" => "/blocks/rate_course/lib.php", // Where to call.
+        "handlerfile" => "/blocks/rate/lib.php", // Where to call.
         "handlerfunction" => "course_delete", // What to call.
         "schedule" => "instant",
     ],

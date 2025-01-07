@@ -15,20 +15,27 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Renderer file
  *
+ * @package    block_rate
+ * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
  * @copyright  2019 Pierre Duverneix <pierre.duverneix@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace block_rate_course\output;
+namespace block_rate\output;
 
 use plugin_renderer_base;
 use renderable;
 
+/**
+ * Class renderer
+ *
+ * @package block_rate\output
+ */
 class renderer extends plugin_renderer_base {
 
     /**
-     *
      * @param \templatable $output
      *
      * @return string|boolean
@@ -36,7 +43,7 @@ class renderer extends plugin_renderer_base {
      */
     public function render_rating(\templatable $output) {
         $data = $output->export_for_template($this);
-        return $this->render_from_template("block_rate_course/rating", $data);
+        return $this->render_from_template("block_rate/rating", $data);
     }
 
     /**
@@ -48,7 +55,7 @@ class renderer extends plugin_renderer_base {
      */
     public function render_rateform(\templatable $output) {
         $data = $output->export_for_template($this);
-        return $this->render_from_template("block_rate_course/rate-form", $data);
+        return $this->render_from_template("block_rate/rate-form", $data);
     }
 
 }

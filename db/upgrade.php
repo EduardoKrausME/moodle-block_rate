@@ -15,20 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package    block
- * @subpackage rate_course
+ * Upgrade file
+ *
+ * @package    block_rate
+ * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
  * @copyright  2009 Jenny Gray
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
-function xmldb_block_rate_course_upgrade($oldversion = 0) {
-    global $CFG, $DB;
+function xmldb_block_rate_upgrade($oldversion = 0) {
+    global $DB;
 
     $dbman = $DB->get_manager();
 
     if ($oldversion < 2025010600) {
-        $table = new xmldb_table("block_rate_course");
+        $table = new xmldb_table("block_rate");
 
         $field1 = new xmldb_field("cmid", XMLDB_TYPE_INTEGER, "10", null, null, null, null, "course");
         if (!$dbman->field_exists($table, $field1)) {
@@ -40,7 +41,7 @@ function xmldb_block_rate_course_upgrade($oldversion = 0) {
             $dbman->add_field($table, $field2);
         }
 
-        upgrade_plugin_savepoint(true, 2025010600, "block", "rate_course");
+        upgrade_plugin_savepoint(true, 2025010600, "block", "rate");
     }
 
     return true;

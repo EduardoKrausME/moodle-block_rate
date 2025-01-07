@@ -15,8 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package    block
- * @subpackage rate_course
+ * Access file
+ *
+ * @package    block_rate
+ * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
  * @copyright  2009 Jenny Gray
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -24,8 +26,7 @@
 defined("MOODLE_INTERNAL") || die();
 
 $capabilities = [
-
-    "block/rate_course:addinstance" => [
+    "block/rate:addinstance" => [
         "captype" => "write",
         "contextlevel" => CONTEXT_BLOCK,
         "archetypes" => [
@@ -34,14 +35,14 @@ $capabilities = [
         ],
         "clonepermissionsfrom" => "moodle/site:manageblocks",
     ],
-    "block/rate_course:myaddinstance" => [
+    "block/rate:myaddinstance" => [
         "captype" => "write",
         "contextlevel" => CONTEXT_BLOCK,
         "archetypes" => [
             "user" => CAP_ALLOW,
         ],
     ],
-    "block/rate_course:rate" => [
+    "block/rate:rate" => [
         "captype" => "write",
         "contextlevel" => CONTEXT_COURSE,
         "archetypes" => [

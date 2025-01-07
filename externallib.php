@@ -16,7 +16,8 @@
 
 /**
  *
- * @package    block_rate_course
+ * @package    block_rate
+ * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
  * @copyright  2019 Pierre Duverneix - Fondation UNIT
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,9 +27,9 @@ defined('MOODLE_INTERNAL') || die;
 require_once($CFG->libdir . "/externallib.php");
 
 /**
- * Class block_rate_course_external
+ * Class block_rate_external
  */
-class block_rate_course_external extends external_api {
+class block_rate_external extends external_api {
     /**
      * Describes the parameters for set_status.
      *
@@ -61,12 +62,12 @@ class block_rate_course_external extends external_api {
         $params = self::validate_parameters(self::set_rating_parameters(),
             ["courseid" => $courseid, "cmid" => $cmid, "rating" => $rating]);
 
-        $rating = $DB->get_record("block_rate_course",
+        $rating = $DB->get_record("block_rate",
             ["userid" => $USER->id, "cmid" => $params["cmid"], "course" => $params["courseid"]]);
 
         if ($rating) {
             $rating->rating = $params["rating"];
-            $DB->update_record("block_rate_course", $rating);
+            $DB->update_record("block_rate", $rating);
 
             return true;
         } else {
@@ -77,7 +78,7 @@ class block_rate_course_external extends external_api {
                 "rating" => $params["rating"],
                 "created" => time(),
             ];
-            $DB->insert_record("block_rate_course", $data);
+            $DB->insert_record("block_rate", $data);
 
             return true;
         }

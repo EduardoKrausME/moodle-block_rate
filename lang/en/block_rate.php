@@ -15,24 +15,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'block_rate_course', language 'en', branch 'MOODLE_20_STABLE'
+ * Strings for component 'block_rate', language 'en', branch 'MOODLE_20_STABLE'
  *
- * @package    block
- * @subpackage rate_course
+ * @package    block_rate
+ * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
  * @copyright  2009 Jenny Gray
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Avaliação';
-$string['courserating'] = 'Avaliações';
-$string['rate_course:addinstance'] = 'Adicionar um novo bloco de avaliação de cursos e atividades';
-$string['rate_course:myaddinstance'] = 'Gerenciar minhas avaliações';
-$string['rate_course:rate'] = 'Pode avaliar';
+$string['pluginname'] = 'Rating';
+$string['courserating'] = 'Ratings';
+$string['rate:addinstance'] = 'Add a new block for course and activity ratings';
+$string['rate:myaddinstance'] = 'Manage my ratings';
+$string['rate:rate'] = 'Can rate';
 
-$string['rating_altnum'] = 'Avaliação: {$a} estrelas.';
+$string['rating_altnum'] = 'Rating: {$a} stars.';
 
-$string['defaulttitle_course'] = 'Avaliar o curso';
-$string['defaulttitle_module'] = 'Avaliar a atividade';
-$string['customtitle'] = 'Título personalizado';
-$string['myrating'] = 'Minha avaliação';
-$string['rerate'] = 'Reavaliar';
+$string['defaulttitle_course'] = 'Rate the course';
+$string['defaulttitle_module'] = 'Rate the activity';
+$string['customtitle'] = 'Custom title';
+$string['myrating'] = 'My rating';
+$string['rerate'] = 'Re-rate';
+
