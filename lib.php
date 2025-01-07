@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Defines Workflow event handlers
+ * Library functions
  *
  * @package    block_rate
  * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
@@ -23,17 +23,19 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
-/* List of handlers. */
-
-$handlers = [
-    /*
-     * Course deleted.
-    */
-    "course_deleted" => [
-        "handlerfile" => "/blocks/rate/lib.php", // Where to call.
-        "handlerfunction" => "block_rate_course_delete", // What to call.
-        "schedule" => "instant",
-    ],
-];
+/**
+ * Called by event handling on course deletion to tidy up database
+ *
+ * @param object $eventdata object event information including course id
+ *
+ * @return bool SQL set or false on fail
+ * @throws dml_exception
+ */
+function block_rate_course_delete($eventdata) {
+    global $DB;
+    $res = $DB->delete_records("block_rate", ["course" => $eventdata->id]);
+    if ($res === false) {
+        return $res;
+    }
+    return true;
+}
