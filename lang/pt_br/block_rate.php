@@ -23,15 +23,15 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+
+$string['customtitle'] = 'Título personalizado';
+$string['defaulttitle_course'] = 'Avaliar o curso';
+$string['defaulttitle_module'] = 'Avaliar a atividade';
+$string['myrating'] = 'Minha avaliação';
 $string['pluginname'] = 'Avaliação por Estrelas';
 $string['rate:addinstance'] = 'Adicionar um novo bloco de avaliação de cursos e atividades';
 $string['rate:myaddinstance'] = 'Gerenciar minhas avaliações';
 $string['rate:rate'] = 'Pode avaliar';
-
 $string['rating_altnum'] = 'Avaliação: {$a} estrelas.';
-
-$string['defaulttitle_course'] = 'Avaliar o curso';
-$string['defaulttitle_module'] = 'Avaliar a atividade';
-$string['customtitle'] = 'Título personalizado';
-$string['myrating'] = 'Minha avaliação';
 $string['rerate'] = 'Reavaliar';
+

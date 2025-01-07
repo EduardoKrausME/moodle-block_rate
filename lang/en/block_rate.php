@@ -23,16 +23,15 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+
+$string['customtitle'] = 'Custom title';
+$string['defaulttitle_course'] = 'Rate the course';
+$string['defaulttitle_module'] = 'Rate the activity';
+$string['myrating'] = 'My rating';
 $string['pluginname'] = 'Star Rating';
 $string['rate:addinstance'] = 'Add a new block for course and activity ratings';
 $string['rate:myaddinstance'] = 'Manage my ratings';
 $string['rate:rate'] = 'Can rate';
-
 $string['rating_altnum'] = 'Rating: {$a} stars.';
-
-$string['defaulttitle_course'] = 'Rate the course';
-$string['defaulttitle_module'] = 'Rate the activity';
-$string['customtitle'] = 'Custom title';
-$string['myrating'] = 'My rating';
 $string['rerate'] = 'Re-rate';
 
