@@ -26,9 +26,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2019070504;
+$plugin->version = 2025010604;
 $plugin->requires = 2010112400;
-$plugin->component = 'block_rate_course';
-$plugin->cron = 0;
-$plugin->release = '2.0';
+$plugin->release = "2.0.1";
 $plugin->maturity = MATURITY_STABLE;
+$plugin->component = "block_rate_course";
