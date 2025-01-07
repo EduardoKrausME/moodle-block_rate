@@ -80,7 +80,7 @@ class block_rate extends block_list {
             $cmid = $matches[1];
         }
 
-        if($cmid) {
+        if ($cmid) {
             $this->title = get_string("defaulttitle_module", "block_rate");
             $config = get_config("block_rate");
             if ($config && $config->customtitle) {
