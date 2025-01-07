@@ -49,9 +49,9 @@ class block_rate_external extends external_api {
     /**
      * Function set_rating
      *
-     * @param $courseid
-     * @param $cmid
-     * @param $rating
+     * @param int $courseid
+     * @param int $cmid
+     * @param int $rating
      *
      * @return bool
      */

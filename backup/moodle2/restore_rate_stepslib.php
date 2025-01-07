@@ -45,7 +45,7 @@ class restore_rate_block_structure_step extends restore_structure_step {
     /**
      * Function process_block
      *
-     * @param $data
+     * @param object $data
      */
     public function process_block($data) {
     }
@@ -53,7 +53,7 @@ class restore_rate_block_structure_step extends restore_structure_step {
     /**
      * Function process_item
      *
-     * @param $item
+     * @param object $item
      */
     public function process_item($item) {
         global $DB;

@@ -45,8 +45,8 @@ class rateform implements renderable, templatable {
     /**
      * rateform constructor.
      *
-     * @param $courseid
-     * @param $cmid
+     * @param int $courseid
+     * @param int $cmid
      */
     public function __construct($courseid, $cmid) {
         $this->courseid = $courseid;
@@ -56,8 +56,8 @@ class rateform implements renderable, templatable {
     /**
      * Function get_my_ratting
      *
-     * @param $courseid
-     * @param $cmid
+     * @param int $courseid
+     * @param int $cmid
      *
      * @return string
      */

@@ -45,8 +45,8 @@ class rating implements renderable, templatable {
     /**
      * rating constructor.
      *
-     * @param $courseid
-     * @param $cmid
+     * @param int $courseid
+     * @param int $cmid
      */
     public function __construct($courseid, $cmid) {
         $this->courseid = $courseid;

@@ -26,7 +26,7 @@
 /**
  * Called by event handling on course deletion to tidy up database
  *
- * @param $eventdata object event information including course id
+ * @param object $eventdata object event information including course id
  *
  * @return bool SQL set or false on fail
  * @throws dml_exception

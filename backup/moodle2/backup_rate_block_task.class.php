@@ -69,7 +69,7 @@ class backup_rate_block_task extends backup_block_task {
     /**
      * Function encode_content_links
      *
-     * @param $content
+     * @param mixed $content
      *
      * @return mixed
      */
