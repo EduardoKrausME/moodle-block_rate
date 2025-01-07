@@ -63,7 +63,7 @@ class restore_rate_block_structure_step extends restore_structure_step {
 
         unset($item["id"]);
 
-        $sql = 'SELECT id 
+        $sql = 'SELECT id
                   FROM {block_rate}
                  WHERE course = :course
                    AND userid = :userid';

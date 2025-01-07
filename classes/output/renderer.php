@@ -36,10 +36,11 @@ use renderable;
 class renderer extends plugin_renderer_base {
 
     /**
+     * Function render_rating
+     *
      * @param \templatable $output
      *
-     * @return string|boolean
-     * @throws \moodle_exception
+     * @return mixed
      */
     public function render_rating(\templatable $output) {
         $data = $output->export_for_template($this);
@@ -47,11 +48,11 @@ class renderer extends plugin_renderer_base {
     }
 
     /**
+     * Function render_rateform
      *
      * @param \templatable $output
      *
-     * @return string|boolean
-     * @throws \moodle_exception
+     * @return mixed
      */
     public function render_rateform(\templatable $output) {
         $data = $output->export_for_template($this);
