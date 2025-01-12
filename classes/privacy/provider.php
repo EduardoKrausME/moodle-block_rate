@@ -15,23 +15,30 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'block_rate', language 'en', branch 'MOODLE_20_STABLE'
+ * Privacy Subsystem implementation for block_rate.
  *
  * @package    block_rate
- * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
- * @copyright  2009 Jenny Gray
+ * @copyright  2025 Eduardo Kraus {@link http://eduardokraus.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace block_rate\privacy;
 
-$string['customtitle'] = 'Custom title';
-$string['defaulttitle_course'] = 'Rate the course';
-$string['defaulttitle_module'] = 'Rate the activity';
-$string['myrating'] = 'My rating';
-$string['pluginname'] = 'Star Rating';
-$string['privacy:metadata'] = 'The Plugin custom field plugin does not store any personal data';
-$string['rate:addinstance'] = 'Add a new block for course and activity ratings';
-$string['rate:myaddinstance'] = 'Manage my ratings';
-$string['rate:rate'] = 'Can rate';
-$string['rating_altnum'] = 'Rating: {$a} stars.';
-$string['rerate'] = 'Re-rate';
+/**
+ * The block_rate module does not store any data.
+ *
+ * @package   block_rate
+ * @copyright 2017 Eduardo Kraus {@link http://eduardokraus.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class provider implements \core_privacy\local\metadata\null_provider {
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason(): string {
+        return 'privacy:metadata';
+    }
+}
