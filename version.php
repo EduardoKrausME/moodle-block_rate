@@ -25,8 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2025011200;
+$plugin->version = 2025020300;
 $plugin->requires = 2010112400;
-$plugin->release = "2.0.3";
+$plugin->release = "2.0.4";
 $plugin->maturity = MATURITY_STABLE;
 $plugin->component = "block_rate";
