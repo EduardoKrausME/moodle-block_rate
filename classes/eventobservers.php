@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Library functions
+ * eventobservers class
  *
  * @package    block_rate
  * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
@@ -23,19 +23,25 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace block_rate;
+
 /**
- * Called by event handling on course deletion to tidy up database
+ * Class eventobservers
  *
- * @param object $eventdata object event information including course id
- *
- * @return bool SQL set or false on fail
- * @throws dml_exception
+ * @package block_rate
  */
-function block_rate_course_delete($eventdata) {
-    global $DB;
-    $res = $DB->delete_records("block_rate", ["course" => $eventdata->id]);
-    if ($res === false) {
-        return $res;
+class eventobservers {
+    /**
+     * Function course_deleted
+     *
+     * @param \core\event\course_deleted $event
+     *
+     * @return bool
+     * @throws \dml_exception
+     */
+    public static function course_deleted($event) {
+        global $DB;
+
+        return $DB->delete_records("block_rate", ["course" => $event->get_data()["objectid"]]);
     }
-    return true;
 }

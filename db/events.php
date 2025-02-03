@@ -27,13 +27,9 @@ defined('MOODLE_INTERNAL') || die();
 
 /* List of handlers. */
 
-$handlers = [
-    /*
-     * Course deleted.
-    */
-    "course_deleted" => [
-        "handlerfile" => "/blocks/rate/lib.php", // Where to call.
-        "handlerfunction" => "block_rate_course_delete", // What to call.
-        "schedule" => "instant",
+$observers = [
+    [
+        "eventname" => "\\core\\event\\course_deleted",
+        "callback" => "\\block_rate\\eventobservers::course_deleted",
     ],
 ];

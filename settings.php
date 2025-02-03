@@ -24,8 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once($CFG->dirroot . "/blocks/rate/lib.php");
-
 if ($ADMIN->fulltree) {
     $setting = new admin_setting_configtext("block_rate/customtitle",
         get_string("customtitle", "block_rate"),
