@@ -54,6 +54,7 @@ class block_rate_external extends external_api {
      * @param int $rating
      *
      * @return bool
+     * @throws dml_exception
      */
     public static function set_rating($courseid, $cmid, $rating) {
         global $DB, $USER;
@@ -61,6 +62,9 @@ class block_rate_external extends external_api {
         // Parameters validation.
         $params = self::validate_parameters(self::set_rating_parameters(),
             ["courseid" => $courseid, "cmid" => $cmid, "rating" => $rating]);
+
+        $context = context_course::instance($courseid);
+        require_capability("block/rate:rate", $context);
 
         $rating = $DB->get_record("block_rate",
             ["userid" => $USER->id, "cmid" => $params["cmid"], "course" => $params["courseid"]]);
