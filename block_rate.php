@@ -89,12 +89,8 @@ class block_rate extends block_list {
         }
 
         if ($config && $config->description) {
-            $description = '<div class="alert alert-info alert-dismissible fade show" role="alert">';
-            $description .= $config->description;
-            $description .= '<button type="button" class="close" data-dismiss="alert" aria-label="x">';
-            $description .= '<span aria-hidden="true">&times;</span></button></div>';
-
-            $this->content->items[] = $description;
+            $this->content->items[] = $OUTPUT->render_from_template("block_rate/description",
+                ["description" => $config->description]);
         }
 
         $form = new \block_rate\output\rateform($COURSE->id, $cmid);
@@ -105,7 +101,8 @@ class block_rate extends block_list {
         $renderer = $this->page->get_renderer("block_rate");
 
         // Output current rating.
-        $this->content->footer = '<div class="text-center">' . $renderer->render($rating) . "</div>";
+        $this->content->footer = $OUTPUT->render_from_template("block_rate/description",
+            ["text" => $renderer->render($rating)]);
 
         return $this->content;
     }
