@@ -23,7 +23,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 $string['customtitle'] = 'Custom title';
 $string['defaulttitle_course'] = 'Rate the course';
 $string['defaulttitle_module'] = 'Rate the activity';
