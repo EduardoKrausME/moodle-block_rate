@@ -60,6 +60,7 @@ class rateform implements renderable, templatable {
      * @param int $cmid
      *
      * @return string
+     * @throws \dml_exception
      */
     private static function get_my_ratting($courseid, $cmid) {
         global $DB, $USER;
@@ -79,6 +80,7 @@ class rateform implements renderable, templatable {
      * @param \renderer_base $output
      *
      * @return stdClass
+     * @throws \dml_exception
      */
     public function export_for_template(renderer_base $output) {
         $myrating = self::get_my_ratting($this->courseid, $this->cmid);
