@@ -59,7 +59,7 @@ class block_rate extends block_list {
      * @return stdClass
      */
     public function get_content() {
-        global $COURSE, $OUTPUT;
+        global $COURSE, $OUTPUT, $PAGE;
 
         if ($this->content !== null) {
             return $this->content;
@@ -71,13 +71,9 @@ class block_rate extends block_list {
         $this->content->items = [];
         $this->content->icons = [];
 
-        // Usando expressão regular para buscar o valor do cmid.
-        preg_match('/cmid-(\d+)/', $OUTPUT->body_attributes(), $matches);
-
-        // Verificando se o valor foi encontrado e exibindo.
         $cmid = 0;
-        if (isset($matches[1])) {
-            $cmid = $matches[1];
+        if (isset($PAGE->cm->id)) {
+            $cmid = $PAGE->cm->id;
         }
 
         if ($cmid) {
