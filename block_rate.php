@@ -57,9 +57,11 @@ class block_rate extends block_list {
      * Function get_content
      *
      * @return stdClass
+     * @throws coding_exception
+     * @throws dml_exception
      */
     public function get_content() {
-        global $COURSE, $OUTPUT, $PAGE;
+        global $COURSE, $OUTPUT;
 
         if ($this->content !== null) {
             return $this->content;
@@ -72,8 +74,8 @@ class block_rate extends block_list {
         $this->content->icons = [];
 
         $cmid = 0;
-        if (isset($PAGE->cm->id)) {
-            $cmid = $PAGE->cm->id;
+        if (isset($this->page->cm->id)) {
+            $cmid = $this->page->cm->id;
         }
 
         if ($cmid) {
