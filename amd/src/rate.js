@@ -13,6 +13,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Rate Form file
+ *
+ * @package    block_rate
+ * @copyright  2025 Eduardo Kraus {@link http://eduardokraus.com}
+ * @copyright  2019 Pierre Duverneix <pierre.duverneix@gmail.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 define(["jquery", "core/ajax", "core/notification"], function($, ajax, notification) {
     var RateAction = function(selector, courseid, cmid) {
         this._region = $(selector);
