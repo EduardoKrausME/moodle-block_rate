@@ -28,6 +28,7 @@ $string['defaulttitle_course'] = 'Rate the course';
 $string['defaulttitle_module'] = 'Rate the activity';
 $string['myrating'] = 'My rating';
 $string['pluginname'] = 'Star Rating';
+$string['privacy:metadata:block_rate'] = 'The Rating of the course module to which this rating belongs.';
 $string['privacy:metadata:block_rate:cmid'] = 'The ID of the course module to which this rating belongs.';
 $string['privacy:metadata:block_rate:course'] = 'The ID of the course to which this rating is associated.';
 $string['privacy:metadata:block_rate:created'] = 'The date and time when the rating was created.';
