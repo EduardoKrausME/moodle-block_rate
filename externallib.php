@@ -59,6 +59,9 @@ class block_rate_external extends external_api {
     public static function set_rating($courseid, $cmid, $rating) {
         global $DB, $USER;
 
+        $coursecontext = \context_course::instance($courseid);
+        self::validate_context($coursecontext);
+
         // Parameters validation.
         $params = self::validate_parameters(self::set_rating_parameters(),
             ["courseid" => $courseid, "cmid" => $cmid, "rating" => $rating]);
