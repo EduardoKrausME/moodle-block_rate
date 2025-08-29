@@ -18,7 +18,7 @@
  * Upgrade file
  *
  * @package    block_rate
- * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
+ * @copyright  2024 Eduardo Kraus {@link https://eduardokraus.com}
  * @copyright  2009 Jenny Gray
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
