@@ -34,4 +34,3 @@ $string['rate:myaddinstance'] = 'Gerenciar minhas avaliações';
 $string['rate:rate'] = 'Pode avaliar';
 $string['rating_altnum'] = 'Avaliação: {$a} estrelas.';
 $string['rerate'] = 'Reavaliar';
-

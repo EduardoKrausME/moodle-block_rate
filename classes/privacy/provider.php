@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * phpcs:disable PSR2.Methods.FunctionClosingBrace.SpacingBeforeClose
+ *
  * Privacy Subsystem implementation for block_rate.
  *
  * @package    block_rate
