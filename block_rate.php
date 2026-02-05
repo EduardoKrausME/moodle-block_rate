@@ -13,6 +13,8 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+use block_rate\output\rateform;
+use block_rate\output\rating;
 
 /**
  * This block allows the user to give the course a rating, which
@@ -30,7 +32,7 @@ class block_rate extends block_list {
     public function init() {
         $this->title = get_string("defaulttitle_course", "block_rate");
         $config = get_config("block_rate");
-        if ($config && $config->customtitle) {
+        if ($config && isset($config->customtitle)) {
             $this->title = $config->customtitle;
         }
     }
@@ -69,9 +71,10 @@ class block_rate extends block_list {
 
         $config = get_config("block_rate");
 
-        $this->content = new stdClass;
-        $this->content->items = [];
-        $this->content->icons = [];
+        $this->content = (object)[
+            "items" => [],
+            "icons" => [],
+        ];
 
         $cmid = 0;
         if (isset($this->page->cm->id)) {
@@ -87,20 +90,18 @@ class block_rate extends block_list {
         }
 
         if ($config && $config->description) {
-            $this->content->items[] = $OUTPUT->render_from_template("block_rate/description",
-                ["description" => $config->description]);
+            $this->content->items[] = $config->description;
         }
 
-        $form = new \block_rate\output\rateform($COURSE->id, $cmid);
+        $form = new rateform($COURSE->id, $cmid);
         $renderer = $this->page->get_renderer("block_rate");
         $this->content->items[] = $renderer->render($form);
 
-        $rating = new \block_rate\output\rating($COURSE->id, $cmid);
+        $rating = new rating($COURSE->id, $cmid);
         $renderer = $this->page->get_renderer("block_rate");
 
         // Output current rating.
-        $this->content->footer = $OUTPUT->render_from_template("block_rate/description",
-            ["text" => $renderer->render($rating)]);
+        $this->content->footer = $renderer->render($rating);
 
         return $this->content;
     }
