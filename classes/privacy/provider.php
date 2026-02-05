@@ -39,13 +39,13 @@ use core_privacy\local\request\userlist;
 use core_privacy\local\request\writer;
 
 /**
+ * phpcs:disable Universal.OOStructures.AlphabeticExtendsImplements.ImplementsWrongOrder
  * Privacy Subsystem implementation for block_rate.
  *
  * @package   block_rate
  * @copyright 2025 Eduardo Kraus {@link https://eduardokraus.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-// phpcs:disable Universal.OOStructures.AlphabeticExtendsImplements.ImplementsWrongOrder
 class provider implements
     \core_privacy\local\metadata\provider,
     \core_privacy\local\request\core_userlist_provider,
