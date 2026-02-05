@@ -45,6 +45,7 @@ use core_privacy\local\request\writer;
  * @copyright 2025 Eduardo Kraus {@link https://eduardokraus.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+// phpcs:disable Universal.OOStructures.AlphabeticExtendsImplements.ImplementsWrongOrder
 class provider implements
     \core_privacy\local\metadata\provider,
     \core_privacy\local\request\core_userlist_provider,
@@ -133,7 +134,7 @@ class provider implements
 
         $user = $contextlist->get_user();
         $userid = $user->id;
-        $cmids = array_reduce($contextlist->get_contexts(), function ($carry, $context) {
+        $cmids = array_reduce($contextlist->get_contexts(), function($carry, $context) {
             if ($context->contextlevel == CONTEXT_MODULE) {
                 $carry[] = $context->instanceid;
             }
@@ -147,10 +148,10 @@ class provider implements
         $cmids = array_keys($cmidstocmids);
 
         // Export the messages.
-        list($insql, $inparams) = $DB->get_in_or_equal($cmids, SQL_PARAMS_NAMED);
+        [$insql, $inparams] = $DB->get_in_or_equal($cmids, SQL_PARAMS_NAMED);
         $params = array_merge($inparams, ["userid" => $userid]);
         $recordset = $DB->get_recordset_select("block_rate", "cmid $insql AND userid = :userid", $params, "created, id");
-        static::recordset_loop_and_export($recordset, "cmid", [], function ($carry, $record) use ($user, $cmidstocmids) {
+        static::recordset_loop_and_export($recordset, "cmid", [], function($carry, $record) use ($user, $cmidstocmids) {
             $message = $record->message;
             $carry[] = [
                 "message" => $message,
@@ -159,10 +160,10 @@ class provider implements
             ];
             return $carry;
 
-        }, function ($cmid, $data) use ($user, $cmidstocmids) {
+        }, function($cmid, $data) use ($user, $cmidstocmids) {
             $context = context_module::instance($cmidstocmids[$cmid]);
             $contextdata = helper::get_context_data($context, $user);
-            $finaldata = (object)array_merge((array)$contextdata, ["messages" => $data]);
+            $finaldata = (object) array_merge((array) $contextdata, ["messages" => $data]);
             helper::export_context_files($context, $user);
             writer::with_context($context)->export_data([], $finaldata);
         });
@@ -196,7 +197,7 @@ class provider implements
         global $DB;
 
         $userid = $contextlist->get_user()->id;
-        $cmids = array_reduce($contextlist->get_contexts(), function ($carry, $context) {
+        $cmids = array_reduce($contextlist->get_contexts(), function($carry, $context) {
             if ($context->contextlevel == CONTEXT_MODULE) {
                 $carry[] = $context->instanceid;
             }
@@ -209,7 +210,7 @@ class provider implements
         $cmidstocmids = static::get_block_rate_ids_to_cmids_from_cmids($cmids);
         $cmids = array_keys($cmidstocmids);
 
-        list($insql, $inparams) = $DB->get_in_or_equal($cmids, SQL_PARAMS_NAMED);
+        [$insql, $inparams] = $DB->get_in_or_equal($cmids, SQL_PARAMS_NAMED);
         $sql = "cmid {$insql} AND userid = :userid";
         $params = array_merge($inparams, ["userid" => $userid]);
 
@@ -229,7 +230,7 @@ class provider implements
         $context = $userlist->get_context();
         $cm = $DB->get_record("course_modules", ["id" => $context->instanceid]);
 
-        list($userinsql, $userinparams) = $DB->get_in_or_equal($userlist->get_userids(), SQL_PARAMS_NAMED);
+        [$userinsql, $userinparams] = $DB->get_in_or_equal($userlist->get_userids(), SQL_PARAMS_NAMED);
         $params = array_merge(["cmid" => $cm->id], $userinparams);
 
         $sql = "cmid = :cmid AND userid {$userinsql}";
@@ -247,7 +248,7 @@ class provider implements
      */
     protected static function get_block_rate_ids_to_cmids_from_cmids(array $cmids) {
         global $DB;
-        list($insql, $inparams) = $DB->get_in_or_equal($cmids, SQL_PARAMS_NAMED);
+        [$insql, $inparams] = $DB->get_in_or_equal($cmids, SQL_PARAMS_NAMED);
         $sql = "
             SELECT id, cmid
               FROM {block_rate}
@@ -260,19 +261,21 @@ class provider implements
      * Loop and export from a recordset.
      *
      * @param moodle_recordset $recordset The recordset.
-     * @param string $splitkey            The record key to determine when to export.
-     * @param mixed $initial              The initial data to reduce from.
-     * @param callable $reducer           The function to return the dataset, receives current dataset, and the current
+     * @param string $splitkey The record key to determine when to export.
+     * @param mixed $initial The initial data to reduce from.
+     * @param callable $reducer The function to return the dataset, receives current dataset, and the current
      *                                    record.
-     * @param callable $export            The function to export the dataset, receives the last value from $splitkey
+     * @param callable $export The function to export the dataset, receives the last value from $splitkey
      *                                    and the dataset.
      *
      * @return void
      *
      * @throws \Exception
      */
-    protected static function recordset_loop_and_export(moodle_recordset $recordset, $splitkey, $initial,
-                                                        callable $reducer, callable $export) {
+    protected static function recordset_loop_and_export(
+        moodle_recordset $recordset, $splitkey, $initial,
+        callable $reducer, callable $export
+    ) {
         $data = $initial;
         $lastid = null;
 
