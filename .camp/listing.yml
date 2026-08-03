@@ -1,0 +1,23 @@
+# (RFC §4.1). Authors update their listing with an ordinary commit; camp
+# ingests and hash-pins it at each tagged release. Listing for block_rate.
+
+name: "Star Rating"
+summary: "Collect quick star ratings and track student feedback."
+description: |
+  Collect quick star ratings and track student feedback.
+
+  This plugin is a Moodle block that provides a rating system, allowing users to rate courses with a score from 1 to 5 stars. The average rating is displayed directly in the block.
+
+  Key capabilities:
+  - Star Rating System : Users can rate courses with up to 5 stars. The average rating is displayed in the block.
+  - Users can rate courses with up to 5 stars.
+  - The average rating is displayed in the block.
+
+  Supported Moodle versions in the supplied plugin list: 3.9 - 5.0.
+
+labels:
+  - fully-free
+category: "reports"
+links:
+  docs: https://github.com/EduardoKrausME/moodle-block_rate#readme
+  issues: https://github.com/EduardoKrausME/moodle-block_rate/issues
