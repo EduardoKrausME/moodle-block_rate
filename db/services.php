@@ -29,6 +29,7 @@ $functions = [
     "block_rate_set_rating" => [
         "classname" => "block_rate_external",
         "methodname" => "set_rating",
+        "classpath" => "blocks/rate/externallib.php",
         "description" => "Set the user rating",
         "type" => "write",
         "ajax" => true,
