@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * externallib.php
+ *
  *
  * @package    block_rate
  * @copyright  2024 Eduardo Kraus {@link https://eduardokraus.com}
