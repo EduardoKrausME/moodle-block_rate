@@ -84,13 +84,19 @@ class provider implements
 
         $sql = "
             SELECT DISTINCT ctx.id
-              FROM {context}  ctx ON ctx.instanceid   = cm.id
-                                 AND ctx.contextlevel = :modulelevel
-              JOIN {block_rate} r ON r.cmid           = cm.id
+              FROM {block_rate} r
+              JOIN {context} ctx
+                ON (r.cmid = 0
+                    AND ctx.contextlevel = :courselevel
+                    AND ctx.instanceid = r.course)
+                OR (r.cmid <> 0
+                    AND ctx.contextlevel = :modulelevel
+                    AND ctx.instanceid = r.cmid)
              WHERE r.userid = :userid";
 
         $params = [
-            "modulelevel" => CONTEXT_COURSE,
+            "courselevel" => CONTEXT_COURSE,
+            "modulelevel" => CONTEXT_MODULE,
             "userid" => $userid,
         ];
         $contextlist->add_from_sql($sql, $params);
@@ -107,17 +113,20 @@ class provider implements
     public static function get_users_in_context(userlist $userlist) {
         $context = $userlist->get_context();
 
-        if (!is_a($context, \context_module::class)) {
+        if ($context->contextlevel == CONTEXT_COURSE) {
+            $sql = "SELECT r.userid
+                      FROM {block_rate} r
+                     WHERE r.course = :instanceid
+                       AND r.cmid = 0";
+        } else if ($context->contextlevel == CONTEXT_MODULE) {
+            $sql = "SELECT r.userid
+                      FROM {block_rate} r
+                     WHERE r.cmid = :instanceid";
+        } else {
             return;
         }
 
-        $sql = "SELECT r.userid
-                  FROM {block_rate} r
-                 WHERE cmid = :instanceid";
-
-        $params = [
-            "instanceid" => $context->instanceid,
-        ];
+        $params = ["instanceid" => $context->instanceid];
 
         $userlist->add_from_sql("userid", $sql, $params);
     }
@@ -179,11 +188,15 @@ class provider implements
     public static function delete_data_for_all_users_in_context(context $context) {
         global $DB;
 
-        if ($context->contextlevel != CONTEXT_MODULE) {
+        if ($context->contextlevel == CONTEXT_COURSE) {
+            $conditions = ["course" => $context->instanceid, "cmid" => 0];
+        } else if ($context->contextlevel == CONTEXT_MODULE) {
+            $conditions = ["cmid" => $context->instanceid];
+        } else {
             return;
         }
 
-        $DB->delete_records_select("block_rate", "cmid = :cmid", ["cmid" => $context->instanceid]);
+        $DB->delete_records("block_rate", $conditions);
     }
 
     /**
@@ -197,24 +210,18 @@ class provider implements
         global $DB;
 
         $userid = $contextlist->get_user()->id;
-        $cmids = array_reduce($contextlist->get_contexts(), function($carry, $context) {
-            if ($context->contextlevel == CONTEXT_MODULE) {
-                $carry[] = $context->instanceid;
+        foreach ($contextlist->get_contexts() as $context) {
+            if ($context->contextlevel == CONTEXT_COURSE) {
+                $conditions = ["course" => $context->instanceid, "cmid" => 0];
+            } else if ($context->contextlevel == CONTEXT_MODULE) {
+                $conditions = ["cmid" => $context->instanceid];
+            } else {
+                continue;
             }
-            return $carry;
-        }, []);
-        if (empty($cmids)) {
-            return;
+
+            $conditions["userid"] = $userid;
+            $DB->delete_records("block_rate", $conditions);
         }
-
-        $cmidstocmids = static::get_block_rate_ids_to_cmids_from_cmids($cmids);
-        $cmids = array_keys($cmidstocmids);
-
-        [$insql, $inparams] = $DB->get_in_or_equal($cmids, SQL_PARAMS_NAMED);
-        $sql = "cmid {$insql} AND userid = :userid";
-        $params = array_merge($inparams, ["userid" => $userid]);
-
-        $DB->delete_records_select("block_rate", $sql, $params);
     }
 
     /**
@@ -228,12 +235,18 @@ class provider implements
         global $DB;
 
         $context = $userlist->get_context();
-        $cm = $DB->get_record("course_modules", ["id" => $context->instanceid]);
 
         [$userinsql, $userinparams] = $DB->get_in_or_equal($userlist->get_userids(), SQL_PARAMS_NAMED);
-        $params = array_merge(["cmid" => $cm->id], $userinparams);
+        if ($context->contextlevel == CONTEXT_COURSE) {
+            $params = array_merge(["course" => $context->instanceid, "cmid" => 0], $userinparams);
+            $sql = "course = :course AND cmid = :cmid AND userid {$userinsql}";
+        } else if ($context->contextlevel == CONTEXT_MODULE) {
+            $params = array_merge(["cmid" => $context->instanceid], $userinparams);
+            $sql = "cmid = :cmid AND userid {$userinsql}";
+        } else {
+            return;
+        }
 
-        $sql = "cmid = :cmid AND userid {$userinsql}";
         $DB->delete_records_select("block_rate", $sql, $params);
     }
 
