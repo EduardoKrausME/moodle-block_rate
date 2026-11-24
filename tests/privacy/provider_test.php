@@ -26,8 +26,6 @@ namespace block_rate\privacy;
 
 use core_privacy\local\request\approved_contextlist;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Tests for the privacy provider.
  *
