@@ -27,13 +27,10 @@
 namespace block_rate\privacy;
 
 use context;
-use context_module;
-use moodle_recordset;
 use core_privacy\local\metadata\collection;
 use core_privacy\local\request\approved_contextlist;
 use core_privacy\local\request\approved_userlist;
 use core_privacy\local\request\contextlist;
-use core_privacy\local\request\helper;
 use core_privacy\local\request\transform;
 use core_privacy\local\request\userlist;
 use core_privacy\local\request\writer;
@@ -141,41 +138,34 @@ class provider implements
     public static function export_user_data(approved_contextlist $contextlist) {
         global $DB;
 
-        $user = $contextlist->get_user();
-        $userid = $user->id;
-        $cmids = array_reduce($contextlist->get_contexts(), function($carry, $context) {
-            if ($context->contextlevel == CONTEXT_MODULE) {
-                $carry[] = $context->instanceid;
+        $userid = $contextlist->get_user()->id;
+        foreach ($contextlist->get_contexts() as $context) {
+            if ($context->contextlevel == CONTEXT_COURSE) {
+                $conditions = ["course" => $context->instanceid, "cmid" => 0];
+            } else if ($context->contextlevel == CONTEXT_MODULE) {
+                $conditions = ["cmid" => $context->instanceid];
+            } else {
+                continue;
             }
-            return $carry;
-        }, []);
-        if (empty($cmids)) {
-            return;
+
+            $conditions["userid"] = $userid;
+            $records = $DB->get_records("block_rate", $conditions, "created, id");
+            if (!$records) {
+                continue;
+            }
+
+            $ratings = [];
+            foreach ($records as $record) {
+                $ratings[] = (object) [
+                    "course" => (int)$record->course,
+                    "cmid" => (int)$record->cmid,
+                    "userid" => (int)$record->userid,
+                    "rating" => (int)$record->rating,
+                    "created" => transform::datetime($record->created),
+                ];
+            }
+            writer::with_context($context)->export_data([], (object) ["ratings" => $ratings]);
         }
-
-        $cmidstocmids = static::get_block_rate_ids_to_cmids_from_cmids($cmids);
-        $cmids = array_keys($cmidstocmids);
-
-        // Export the messages.
-        [$insql, $inparams] = $DB->get_in_or_equal($cmids, SQL_PARAMS_NAMED);
-        $params = array_merge($inparams, ["userid" => $userid]);
-        $recordset = $DB->get_recordset_select("block_rate", "cmid $insql AND userid = :userid", $params, "created, id");
-        static::recordset_loop_and_export($recordset, "cmid", [], function($carry, $record) use ($user, $cmidstocmids) {
-            $message = $record->message;
-            $carry[] = [
-                "message" => $message,
-                "sent_at" => transform::datetime($record->timestamp),
-                "is_system_generated" => transform::yesno($record->issystem),
-            ];
-            return $carry;
-
-        }, function($cmid, $data) use ($user, $cmidstocmids) {
-            $context = context_module::instance($cmidstocmids[$cmid]);
-            $contextdata = helper::get_context_data($context, $user);
-            $finaldata = (object) array_merge((array) $contextdata, ["messages" => $data]);
-            helper::export_context_files($context, $user);
-            writer::with_context($context)->export_data([], $finaldata);
-        });
     }
 
     /**
@@ -236,7 +226,11 @@ class provider implements
 
         $context = $userlist->get_context();
 
-        [$userinsql, $userinparams] = $DB->get_in_or_equal($userlist->get_userids(), SQL_PARAMS_NAMED);
+        $userids = $userlist->get_userids();
+        if (!$userids) {
+            return;
+        }
+        [$userinsql, $userinparams] = $DB->get_in_or_equal($userids, SQL_PARAMS_NAMED);
         if ($context->contextlevel == CONTEXT_COURSE) {
             $params = array_merge(["course" => $context->instanceid, "cmid" => 0], $userinparams);
             $sql = "course = :course AND cmid = :cmid AND userid {$userinsql}";
@@ -250,60 +244,4 @@ class provider implements
         $DB->delete_records_select("block_rate", $sql, $params);
     }
 
-    /**
-     * Return a dict of rate IDs mapped to their course module ID.
-     *
-     * @param array $cmids The course module IDs.
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    protected static function get_block_rate_ids_to_cmids_from_cmids(array $cmids) {
-        global $DB;
-        [$insql, $inparams] = $DB->get_in_or_equal($cmids, SQL_PARAMS_NAMED);
-        $sql = "
-            SELECT id, cmid
-              FROM {block_rate}
-             WHERE cmid {$insql}";
-        $params = array_merge($inparams);
-        return $DB->get_records_sql_menu($sql, $params);
-    }
-
-    /**
-     * Loop and export from a recordset.
-     *
-     * @param moodle_recordset $recordset The recordset.
-     * @param string $splitkey The record key to determine when to export.
-     * @param mixed $initial The initial data to reduce from.
-     * @param callable $reducer The function to return the dataset, receives current dataset, and the current
-     *                                    record.
-     * @param callable $export The function to export the dataset, receives the last value from $splitkey
-     *                                    and the dataset.
-     *
-     * @return void
-     *
-     * @throws \Exception
-     */
-    protected static function recordset_loop_and_export(
-        moodle_recordset $recordset, $splitkey, $initial,
-        callable $reducer, callable $export
-    ) {
-        $data = $initial;
-        $lastid = null;
-
-        foreach ($recordset as $record) {
-            if ($lastid && $record->{$splitkey} != $lastid) {
-                $export($lastid, $data);
-                $data = $initial;
-            }
-            $data = $reducer($data, $record);
-            $lastid = $record->{$splitkey};
-        }
-        $recordset->close();
-
-        if (!empty($lastid)) {
-            $export($lastid, $data);
-        }
-    }
 }
