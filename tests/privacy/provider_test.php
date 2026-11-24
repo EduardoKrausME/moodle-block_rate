@@ -25,6 +25,7 @@
 namespace block_rate\privacy;
 
 use core_privacy\local\request\approved_contextlist;
+use core_privacy\local\request\writer;
 
 /**
  * Tests for the privacy provider.
@@ -65,6 +66,83 @@ final class provider_test extends \advanced_testcase {
 
         $this->assertFalse($DB->record_exists('block_rate', ['userid' => $user->id]));
         $this->assertTrue($DB->record_exists('block_rate', ['userid' => $otheruser->id]));
+    }
+
+    /**
+     * Export only the requested user's ratings in approved contexts.
+     */
+    public function test_export_only_approved_rating_contexts(): void {
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $forum = $generator->create_module('forum', ['course' => $course->id]);
+        $othercourse = $generator->create_course();
+        $user = $generator->create_user();
+        $otheruser = $generator->create_user();
+
+        $this->create_rating($course->id, 0, $user->id);
+        $this->create_rating($course->id, $forum->cmid, $user->id);
+        $this->create_rating($course->id, 0, $otheruser->id);
+        $this->create_rating($course->id, $forum->cmid, $otheruser->id);
+        $this->create_rating($othercourse->id, 0, $user->id);
+
+        $coursecontext = \context_course::instance($course->id);
+        $modulecontext = \context_module::instance($forum->cmid);
+        $othercontext = \context_course::instance($othercourse->id);
+
+        try {
+            provider::export_user_data(new approved_contextlist($user, 'block_rate', [$coursecontext->id]));
+            $data = writer::with_context($coursecontext)->get_data([]);
+            $this->assertCount(1, $data->ratings);
+            $this->assertEquals($user->id, $data->ratings[0]->userid);
+            $this->assertEquals($course->id, $data->ratings[0]->course);
+            $this->assertSame(0, $data->ratings[0]->cmid);
+            $this->assertSame(5, $data->ratings[0]->rating);
+            $this->assertNotEmpty($data->ratings[0]->created);
+            $this->assertFalse(writer::with_context($modulecontext)->has_any_data());
+            $this->assertFalse(writer::with_context($othercontext)->has_any_data());
+
+            provider::export_user_data(new approved_contextlist($user, 'block_rate', [$modulecontext->id]));
+            $data = writer::with_context($modulecontext)->get_data([]);
+            $this->assertCount(1, $data->ratings);
+            $this->assertEquals($user->id, $data->ratings[0]->userid);
+            $this->assertEquals($forum->cmid, $data->ratings[0]->cmid);
+            $this->assertFalse(writer::with_context($othercontext)->has_any_data());
+        } finally {
+            writer::reset();
+        }
+    }
+
+    /**
+     * Deleting a course rating must not delete module ratings or another user's data.
+     */
+    public function test_delete_user_data_in_one_context(): void {
+        global $DB;
+
+        $this->resetAfterTest();
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $forum = $generator->create_module('forum', ['course' => $course->id]);
+        $user = $generator->create_user();
+        $otheruser = $generator->create_user();
+
+        $this->create_rating($course->id, 0, $user->id);
+        $this->create_rating($course->id, $forum->cmid, $user->id);
+        $this->create_rating($course->id, 0, $otheruser->id);
+
+        $context = \context_course::instance($course->id);
+        provider::delete_data_for_user(new approved_contextlist($user, 'block_rate', [$context->id]));
+
+        $this->assertFalse($DB->record_exists('block_rate', [
+            'course' => $course->id, 'cmid' => 0, 'userid' => $user->id,
+        ]));
+        $this->assertTrue($DB->record_exists('block_rate', [
+            'course' => $course->id, 'cmid' => $forum->cmid, 'userid' => $user->id,
+        ]));
+        $this->assertTrue($DB->record_exists('block_rate', [
+            'course' => $course->id, 'cmid' => 0, 'userid' => $otheruser->id,
+        ]));
     }
 
     /**
